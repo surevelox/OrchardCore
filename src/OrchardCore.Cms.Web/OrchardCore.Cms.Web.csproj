@@ -25,6 +25,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup Condition="$(MicrosoftNETCoreAppPackageVersion) != '' and $(MicrosoftAspNetCoreAppPackageVersion) != ''">
+    <FrameworkReference Update="Microsoft.AspNetCore.App" RuntimeFrameworkVersion="$(MicrosoftAspNetCoreAppPackageVersion)" />
+    <FrameworkReference Update="Microsoft.NETCore.App" RuntimeFrameworkVersion="$(MicrosoftNETCoreAppPackageVersion)" />
+  </ItemGroup>
+
+
   <!-- Necessary as we reference the Project and not the Package -->
   <Import Project="..\OrchardCore\OrchardCore.Application.Cms.Targets\OrchardCore.Application.Cms.Targets.targets" />
   <Import Project="..\OrchardCore\OrchardCore.Application.Targets\OrchardCore.Application.Targets.targets" />
