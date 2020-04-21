@@ -17,6 +17,8 @@ namespace OrchardCore.Contents
                     dynamic shape = displaying.Shape;
                     ContentItem contentItem = shape.ContentItem;
 
+                    bool iscontained = displaying.Shape.Metadata.Alternates.Contains("Contained");
+
                     if (contentItem != null)
                     {
                         // Alternates in order of specificity.
@@ -25,18 +27,40 @@ namespace OrchardCore.Contents
 
                         // Content__[DisplayType] e.g. Content-Summary
                         displaying.Shape.Metadata.Alternates.Add("Content_" + EncodeAlternateElement(displaying.Shape.Metadata.DisplayType));
+                        if (iscontained)
+                        {
+                            displaying.Shape.Metadata.Alternates.Add("Contained_" + EncodeAlternateElement(displaying.Shape.Metadata.DisplayType));
+                        }
 
                         // Content__[ContentType] e.g. Content-BlogPost,
                         displaying.Shape.Metadata.Alternates.Add("Content__" + EncodeAlternateElement(contentItem.ContentType));
 
+                        if (iscontained)
+                        {
+                            displaying.Shape.Metadata.Alternates.Add("Contained__" + EncodeAlternateElement(contentItem.ContentType));
+                        }
+
                         // Content__[Id] e.g. Content-42,
                         displaying.Shape.Metadata.Alternates.Add("Content__" + contentItem.Id);
+                        if (iscontained)
+                        {
+                            displaying.Shape.Metadata.Alternates.Add("Contained__" + contentItem.Id);
+                        }
 
                         // Content_[DisplayType]__[ContentType] e.g. Content-BlogPost.Summary
                         displaying.Shape.Metadata.Alternates.Add("Content_" + displaying.Shape.Metadata.DisplayType + "__" + EncodeAlternateElement(contentItem.ContentType));
+                        if (iscontained)
+                        {
+                            displaying.Shape.Metadata.Alternates.Add("Contained_" + displaying.Shape.Metadata.DisplayType + "__" + EncodeAlternateElement(contentItem.ContentType));
+
+                        }
 
                         // Content_[DisplayType]__[Id] e.g. Content-42.Summary
                         displaying.Shape.Metadata.Alternates.Add("Content_" + displaying.Shape.Metadata.DisplayType + "__" + contentItem.Id);
+                        if (iscontained)
+                        {
+                            displaying.Shape.Metadata.Alternates.Add("Contained_" + displaying.Shape.Metadata.DisplayType + "__" + contentItem.Id);
+                        }
                     }
                 });
 

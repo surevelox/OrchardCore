@@ -82,8 +82,23 @@ namespace OrchardCore.ContentManagement.Display
             ShapeMetadata metadata = itemShape.Metadata;
             metadata.DisplayType = actualDisplayType;
 
+            if (!updater.IsContentUpdater)
+            {
+                metadata.Alternates.Add("Contained");
+
+                if (actualDisplayType != "Detail")
+                {
+                    metadata.Alternates.Add($"Contained_{actualDisplayType}");
+                }
+            }
+
             // [Stereotype]_[DisplayType]__[ContentType] e.g. Content-BlogPost.Summary
             metadata.Alternates.Add($"{actualShapeType}__{contentItem.ContentType}");
+
+            if (!updater.IsContentUpdater)
+            {
+                metadata.Alternates.Add($"Contained_{actualDisplayType}__{contentItem.ContentType}");
+            }
 
             var context = new BuildDisplayContext(
                 itemShape,
