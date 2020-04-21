@@ -17,9 +17,14 @@
       "profile": "http://about.me/sebastienros",
       "contributions": [
         "code",
-        "review",
+        "content",
+        "eventOrganizing",
         "projectManagement",
-        "tutorial"
+        "question",
+        "review",
+        "tutorial",
+        "talk",
+        "video"
       ]
     },
     {
@@ -385,7 +390,8 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/3008547?v=4",
       "profile": "https://github.com/netwavebe",
       "contributions": [
-        "code"
+        "code",
+        "question"
       ]
     },
     {
