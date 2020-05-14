@@ -281,15 +281,7 @@ namespace OrchardCore.DisplayManagement.Razor
             var sectionShape = new Shape();
             sectionShape.Metadata.Type = "AspSection";
             sectionShape.Properties[nameof(RenderAsyncDelegate)] = SectionDelegate(section, sectionShape);
-
-            if (zone is Zones.ZoneOnDemand zoneOnDemand)
-            {
-                zoneOnDemand.AddAsync(sectionShape).GetAwaiter().GetResult();
-            }
-            else
-            {
-                zone.Add(sectionShape);
-            }
+            zone.Add(sectionShape);
         }
 
         private RenderAsyncDelegate SectionDelegate(RenderAsyncDelegate oldDelegate, dynamic shape)
