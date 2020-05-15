@@ -278,9 +278,17 @@ namespace OrchardCore.DisplayManagement.Razor
         {
             var zone = ThemeLayout.Zones[name];
 
+            if (zone is Zones.ZoneOnDemand)
+            {
+                zone = new Shape();
+                zone.Metadata.Type = "Zone";
+                ThemeLayout.Zones[name] = zone;
+            }
+
             var sectionShape = new Shape();
             sectionShape.Metadata.Type = "AspSection";
             sectionShape.Properties[nameof(RenderAsyncDelegate)] = SectionDelegate(section, sectionShape);
+
             zone.Add(sectionShape);
         }
 
