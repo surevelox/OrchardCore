@@ -208,38 +208,38 @@
 	.palette-color-6 { fill: #328533 !important; }
 	.palette-color-7 { fill: #1D6A23 !important; }
 	.au { fill: #328533; }
-	.hu { fill: #328533; }
 	.ca { fill: #328533; }
+	.hu { fill: #328533; }
 	.gb { fill: #1D6A23; }
 	.fr { fill: #1D6A23; }
-	.us { fill: #1D6A23; }
 	.ye { fill: #1D6A23; }
-	.tr { fill: #D9E887; }
-	.vn { fill: #D9E887; }
-	.ru { fill: #D9E887; }
-	.im { fill: #D9E887; }
-	.ba { fill: #D9E887; }
-	.sg { fill: #D9E887; }
-	.dk { fill: #D9E887; }
+	.us { fill: #1D6A23; }
 	.no { fill: #D9E887; }
+	.tr { fill: #D9E887; }
+	.sg { fill: #D9E887; }
+	.vn { fill: #D9E887; }
 	.cy { fill: #D9E887; }
-	.ro { fill: #D9E887; }
-	.bg { fill: #D9E887; }
+	.ba { fill: #D9E887; }
+	.im { fill: #D9E887; }
+	.ru { fill: #D9E887; }
 	.ee { fill: #D9E887; }
-	.jp { fill: #B3D778; }
-	.at { fill: #B3D778; }
-	.za { fill: #B3D778; }
+	.ro { fill: #D9E887; }
+	.dk { fill: #D9E887; }
+	.bg { fill: #D9E887; }
 	.ua { fill: #B3D778; }
-	.es { fill: #B3D778; }
-	.pl { fill: #B3D778; }
-	.in { fill: #B3D778; }
-	.rs { fill: #B3D778; }
-	.pt { fill: #B3D778; }
+	.jp { fill: #B3D778; }
 	.ch { fill: #B3D778; }
+	.at { fill: #B3D778; }
+	.pl { fill: #B3D778; }
+	.za { fill: #B3D778; }
 	.it { fill: #B3D778; }
-	.pk { fill: #8CC569; }
-	.tn { fill: #8CC569; }
+	.rs { fill: #B3D778; }
+	.in { fill: #B3D778; }
+	.es { fill: #B3D778; }
+	.pt { fill: #B3D778; }
 	.th { fill: #8CC569; }
+	.tn { fill: #8CC569; }
+	.pk { fill: #8CC569; }
 	.fi { fill: #6AB356; }
 	.de { fill: #6AB356; }
 	.nz { fill: #6AB356; }
@@ -6526,7 +6526,7 @@
      class="landxx coastxx us"
      transform="translate(-1.5631002,-488.5008)">
     <title
-       id="foo">United States of America (1530 contributions)
+       id="foo">United States of America (1531 contributions)
 </title>
     <path
        id="United_States_Alaska_mainland"
