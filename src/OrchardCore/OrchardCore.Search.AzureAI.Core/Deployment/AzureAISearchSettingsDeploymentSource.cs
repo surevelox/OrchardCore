@@ -1,5 +1,4 @@
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using OrchardCore.Deployment;
 using OrchardCore.Search.AzureAI.Models;
 using OrchardCore.Settings;
@@ -12,20 +11,17 @@ public class AzureAISearchSettingsDeploymentSource(ISiteService siteService) : I
 
     public async Task ProcessDeploymentStepAsync(DeploymentStep step, DeploymentPlanResult result)
     {
-        var settingsStep = step as AzureAISearchSettingsDeploymentStep;
-
-        if (settingsStep == null)
+        if (step is not AzureAISearchSettingsDeploymentStep)
         {
             return;
         }
 
-        var site = await _siteService.GetSiteSettingsAsync();
+        var settings = await _siteService.GetSettingsAsync<AzureAISearchSettings>();
 
-        var settings = site.As<AzureAISearchSettings>();
-
-        result.Steps.Add(new JObject(
-            new JProperty("name", "Settings"),
-            new JProperty(nameof(AzureAISearchSettings), JObject.FromObject(settings))
-        ));
+        result.Steps.Add(new JsonObject
+        {
+            ["name"] = "Settings",
+            [nameof(AzureAISearchSettings)] = JObject.FromObject(settings),
+        });
     }
 }

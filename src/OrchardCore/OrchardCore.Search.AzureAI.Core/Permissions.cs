@@ -1,13 +1,16 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OrchardCore.Search.AzureAI.Services;
 using OrchardCore.Security.Permissions;
 
 namespace OrchardCore.Search.AzureAI;
 
-public class Permissions(AzureAISearchIndexSettingsService indexSettingsService) : IPermissionProvider
+public sealed class Permissions : IPermissionProvider
 {
-    private readonly AzureAISearchIndexSettingsService _indexSettingsService = indexSettingsService;
+    private readonly AzureAISearchIndexSettingsService _indexSettingsService;
+
+    public Permissions(AzureAISearchIndexSettingsService indexSettingsService)
+    {
+        _indexSettingsService = indexSettingsService;
+    }
 
     public async Task<IEnumerable<Permission>> GetPermissionsAsync()
     {
@@ -26,18 +29,15 @@ public class Permissions(AzureAISearchIndexSettingsService indexSettingsService)
         return permissions;
     }
 
-    public IEnumerable<PermissionStereotype> GetDefaultStereotypes()
-        => _defaultStereotypes;
-
-    private static readonly IEnumerable<PermissionStereotype> _defaultStereotypes = new[]
+    public IEnumerable<PermissionStereotype> GetDefaultStereotypes() =>
+    [
+        new PermissionStereotype
         {
-            new PermissionStereotype
-            {
-                Name = "Administrator",
-                Permissions = new[]
-                {
-                    AzureAISearchIndexPermissionHelper.ManageAzureAISearchIndexes,
-                },
-            },
-        };
+            Name = OrchardCoreConstants.Roles.Administrator,
+            Permissions =
+            [
+                AzureAISearchIndexPermissionHelper.ManageAzureAISearchIndexes,
+            ],
+        },
+    ];
 }

@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Search.Documents.Models;
 
 namespace OrchardCore.Search.AzureAI;

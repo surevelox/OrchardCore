@@ -1,5 +1,4 @@
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using OrchardCore.Deployment;
 
 namespace OrchardCore.Search.AzureAI.Deployment;
@@ -17,11 +16,12 @@ public class AzureAISearchIndexRebuildDeploymentSource : IDeploymentSource
 
         var indicesToRebuild = rebuildStep.IncludeAll ? [] : rebuildStep.Indices;
 
-        result.Steps.Add(new JObject(
-            new JProperty("name", Name),
-            new JProperty("includeAll", rebuildStep.IncludeAll),
-            new JProperty("Indices", new JArray(indicesToRebuild))
-        ));
+        result.Steps.Add(new JsonObject
+        {
+            ["name"] = Name,
+            ["includeAll"] = rebuildStep.IncludeAll,
+            ["Indices"] = JArray.FromObject(indicesToRebuild),
+        });
 
         return Task.CompletedTask;
     }

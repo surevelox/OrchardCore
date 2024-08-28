@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using OrchardCore.Navigation;
@@ -8,11 +6,11 @@ using OrchardCore.Search.AzureAI.Models;
 
 namespace OrchardCore.Search.AzureAI;
 
-public class AdminMenu(
+public sealed class AdminMenu(
     IStringLocalizer<AdminMenu> stringLocalizer,
     IOptions<AzureAISearchDefaultOptions> azureAISearchSettings) : INavigationProvider
 {
-    protected readonly IStringLocalizer S = stringLocalizer;
+    internal readonly IStringLocalizer S = stringLocalizer;
     private readonly AzureAISearchDefaultOptions _azureAISearchSettings = azureAISearchSettings.Value;
 
     public Task BuildNavigationAsync(string name, NavigationBuilder builder)
@@ -24,11 +22,13 @@ public class AdminMenu(
 
         builder
             .Add(S["Search"], NavigationConstants.AdminMenuSearchPosition, search => search
-                .AddClass("azure-ai-service")
-                .Id("azureaiservice")
+                .AddClass("search")
+                .Id("search")
                 .Add(S["Indexing"], S["Indexing"].PrefixPosition(), indexing => indexing
                     .Add(S["Azure AI Indices"], S["Azure AI Indices"].PrefixPosition(), indexes => indexes
-                        .Action("Index", "Admin", new { area = "OrchardCore.Search.AzureAI" })
+                        .Action("Index", "Admin", "OrchardCore.Search.AzureAI")
+                        .AddClass("azureaiindices")
+                        .Id("azureaiindices")
                         .Permission(AzureAISearchIndexPermissionHelper.ManageAzureAISearchIndexes)
                         .LocalNav()
                     )

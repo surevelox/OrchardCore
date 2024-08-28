@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -22,7 +18,7 @@ using YesSql.Services;
 
 namespace OrchardCore.Search;
 
-public class SearchController : Controller
+public sealed class SearchController : Controller
 {
     private readonly IAuthorizationService _authorizationService;
     private readonly ISiteService _siteService;
@@ -33,7 +29,7 @@ public class SearchController : Controller
     private readonly IShapeFactory _shapeFactory;
     private readonly ILogger _logger;
 
-    protected readonly IHtmlLocalizer H;
+    internal readonly IHtmlLocalizer H;
 
     public SearchController(
         IAuthorizationService authorizationService,
@@ -68,9 +64,7 @@ public class SearchController : Controller
 
             return View();
         }
-
         var siteSettings = await _siteService.GetSiteSettingsAsync();
-
         var searchSettings = siteSettings.As<SearchSettings>();
         ISearchService searchService = null;
 
@@ -124,7 +118,7 @@ public class SearchController : Controller
         {
             Index = viewModel.Index,
             Terms = viewModel.Terms,
-            ContentItemIds = searchResult.ContentItemIds ?? Enumerable.Empty<string>(),
+            ContentItemIds = searchResult.ContentItemIds ?? [],
             SearchService = searchService,
             TotalHits = searchResult.ContentItemIds?.Count ?? 0,
         };
@@ -146,7 +140,7 @@ public class SearchController : Controller
                 SearchResults = new SearchResultsViewModel()
                 {
                     Index = viewModel.Index,
-                    ContentItems = Enumerable.Empty<ContentItem>(),
+                    ContentItems = [],
                 },
             });
         }

@@ -1,23 +1,27 @@
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Navigation;
 
 namespace OrchardCore.Facebook;
 
-public class AdminMenu : INavigationProvider
+public sealed class AdminMenu : INavigationProvider
 {
-    protected readonly IStringLocalizer S;
+    private static readonly RouteValueDictionary _routeValues = new()
+    {
+        { "area", "OrchardCore.Settings" },
+        { "groupId", FacebookConstants.Features.Core },
+    };
 
-    public AdminMenu(
-        IStringLocalizer<AdminMenu> localizer)
+    internal readonly IStringLocalizer S;
+
+    public AdminMenu(IStringLocalizer<AdminMenu> localizer)
     {
         S = localizer;
     }
 
     public Task BuildNavigationAsync(string name, NavigationBuilder builder)
     {
-        if (!string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase))
+        if (!NavigationHelper.IsAdminMenu(name))
         {
             return Task.CompletedTask;
         }
@@ -25,10 +29,10 @@ public class AdminMenu : INavigationProvider
         builder
             .Add(S["Configuration"], configuration => configuration
                 .Add(S["Settings"], settings => settings
-                    .Add(S["Meta App"], S["Meta App"].PrefixPosition(), facebook => facebook
+                    .Add(S["Meta App"], S["Meta App"].PrefixPosition(), metaApp => metaApp
                         .AddClass("facebookApp")
                         .Id("facebookApp")
-                        .Action("Index", "Admin", new { area = "OrchardCore.Settings", groupId = FacebookConstants.Features.Core })
+                        .Action("Index", "Admin", _routeValues)
                         .Permission(Permissions.ManageFacebookApp)
                         .LocalNav()
                     )
@@ -39,9 +43,15 @@ public class AdminMenu : INavigationProvider
     }
 }
 
-public class AdminMenuLogin : INavigationProvider
+public sealed class AdminMenuLogin : INavigationProvider
 {
-    protected readonly IStringLocalizer S;
+    private static readonly RouteValueDictionary _routeValues = new()
+    {
+        { "area", "OrchardCore.Settings" },
+        { "groupId", FacebookConstants.Features.Login },
+    };
+
+    internal readonly IStringLocalizer S;
 
     public AdminMenuLogin(
         IStringLocalizer<AdminMenuLogin> localizer)
@@ -51,7 +61,7 @@ public class AdminMenuLogin : INavigationProvider
 
     public Task BuildNavigationAsync(string name, NavigationBuilder builder)
     {
-        if (!string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase))
+        if (!NavigationHelper.IsAdminMenu(name))
         {
             return Task.CompletedTask;
         }
@@ -59,10 +69,10 @@ public class AdminMenuLogin : INavigationProvider
         builder
             .Add(S["Security"], security => security
                 .Add(S["Authentication"], authentication => authentication
-                    .Add(S["Meta"], S["Meta"].PrefixPosition(), settings => settings
+                    .Add(S["Meta"], S["Meta"].PrefixPosition(), meta => meta
                         .AddClass("facebook")
                         .Id("facebook")
-                        .Action("Index", "Admin", new { area = "OrchardCore.Settings", groupId = FacebookConstants.Features.Login })
+                        .Action("Index", "Admin", _routeValues)
                         .Permission(Permissions.ManageFacebookApp)
                         .LocalNav()
                     )
@@ -73,9 +83,15 @@ public class AdminMenuLogin : INavigationProvider
     }
 }
 
-public class AdminMenuPixel : INavigationProvider
+public sealed class AdminMenuPixel : INavigationProvider
 {
-    protected readonly IStringLocalizer S;
+    private static readonly RouteValueDictionary _routeValues = new()
+    {
+        { "area", "OrchardCore.Settings" },
+        { "groupId", FacebookConstants.PixelSettingsGroupId },
+    };
+
+    internal readonly IStringLocalizer S;
 
     public AdminMenuPixel(
         IStringLocalizer<AdminMenuLogin> stringLocalizer)
@@ -85,7 +101,7 @@ public class AdminMenuPixel : INavigationProvider
 
     public Task BuildNavigationAsync(string name, NavigationBuilder builder)
     {
-        if (!string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase))
+        if (!NavigationHelper.IsAdminMenu(name))
         {
             return Task.CompletedTask;
         }
@@ -96,7 +112,7 @@ public class AdminMenuPixel : INavigationProvider
                     .Add(S["Meta Pixel"], S["Meta Pixel"].PrefixPosition(), pixel => pixel
                         .AddClass("facebookPixel")
                         .Id("facebookPixel")
-                        .Action("Index", "Admin", new { area = "OrchardCore.Settings", groupId = FacebookConstants.PixelSettingsGroupId })
+                        .Action("Index", "Admin", _routeValues)
                         .Permission(FacebookConstants.ManageFacebookPixelPermission)
                         .LocalNav()
                     )

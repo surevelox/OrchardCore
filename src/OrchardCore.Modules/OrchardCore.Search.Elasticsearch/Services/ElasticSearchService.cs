@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Fluid.Values;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -66,8 +62,7 @@ public class ElasticsearchService : ISearchService
             return result;
         }
 
-        var siteSettings = await _siteService.GetSiteSettingsAsync();
-        var searchSettings = siteSettings.As<ElasticSettings>();
+        var searchSettings = await _siteService.GetSettingsAsync<ElasticSettings>();
 
         var index = !string.IsNullOrWhiteSpace(indexName) ? indexName.Trim() : searchSettings.SearchIndex;
 

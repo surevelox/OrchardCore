@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Notifications;
 using OrchardCore.Users.Models;
@@ -18,7 +17,7 @@ public class SmsNotificationProvider : INotificationMethodProvider
         S = stringLocalizer;
     }
 
-    public string Method => "SMS";
+    public string Method { get; } = "SMS";
 
     public LocalizedString Name => S["SMS Notifications"];
 

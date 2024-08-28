@@ -24,9 +24,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IElasticQueryService, ElasticQueryService>();
         services.AddScoped<IContentHandler, ElasticIndexingContentHandler>();
 
-        // ElasticQuerySource is registered for both the Queries module and local usage.
-        services.AddScoped<IQuerySource, ElasticQuerySource>();
-        services.AddScoped<ElasticQuerySource>();
+        services.AddQuerySource<ElasticQuerySource>(ElasticQuerySource.SourceName);
+
         services.AddRecipeExecutionStep<ElasticIndexStep>();
         services.AddRecipeExecutionStep<ElasticSettingsStep>();
         services.AddRecipeExecutionStep<ElasticIndexRebuildStep>();
